@@ -1,0 +1,1 @@
+from CoppeliaSim_Gym.envs.GymCopp import GymCoppManR

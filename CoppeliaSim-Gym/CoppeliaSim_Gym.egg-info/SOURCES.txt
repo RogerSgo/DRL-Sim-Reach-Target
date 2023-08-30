@@ -1,0 +1,9 @@
+setup.py
+CoppeliaSim_Gym/__init__.py
+CoppeliaSim_Gym.egg-info/PKG-INFO
+CoppeliaSim_Gym.egg-info/SOURCES.txt
+CoppeliaSim_Gym.egg-info/dependency_links.txt
+CoppeliaSim_Gym.egg-info/requires.txt
+CoppeliaSim_Gym.egg-info/top_level.txt
+CoppeliaSim_Gym/envs/GymCopp.py
+CoppeliaSim_Gym/envs/__init__.py
