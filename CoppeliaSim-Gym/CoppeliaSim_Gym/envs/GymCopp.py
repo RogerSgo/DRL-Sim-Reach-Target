@@ -43,12 +43,12 @@ class GymCoppManR(gymnasium.Env):
         self.step_counter = 0   # Contador de episodio
         self.i = 0 
         
-        self.default_pos = np.asarray([0.0, 0.0, 0.0, -1.5, 0.0, 1.5, 0.0]) # Posicion inicial del robot [0.0, 1.1, 0.0, -1.0, 0.0, 2.0, 0.0]
+        self.default_pos = np.asarray([2.5444438e-14,2.5934508e-01,0.0000000e+00,-9.0046700e+01,-1.0882580e-02,8.9987617e+01,-1.0177775e-13])
         self.a_min = -3.14
         self.a_max = 3.14
         # Obtener los manejadores de la escena
         _, self.efector = sim.simxGetObjectHandle(self.clientID, 'FrankaGripper', sim.simx_opmode_blocking)   # EfectorFinal
-        _, self.tcp = sim.simxGetObjectHandle(self.clientID, 'PuntoO', sim.simx_opmode_blocking)   # Punta TCP
+        _, self.tcp = sim.simxGetObjectHandle(self.clientID, 'Punta', sim.simx_opmode_blocking)   # Punta TCP
         _, self.objetivo = sim.simxGetObjectHandle(self.clientID, 'Esfera', sim.simx_opmode_blocking)   # Esfera
         for i in range(1, 3):
             _, self.cam = sim.simxGetObjectHandle(self.clientID, STEREO_CAMERA_NAME + str(i), sim.simx_opmode_blocking)
@@ -127,16 +127,11 @@ class GymCoppManR(gymnasium.Env):
         else:
             rl = 0.0
         print('Recompensa llegada:', rl) 
-        if self.tocar() == 1.0:   # colision
-            rc = self.tocar()
-            time.sleep(3)
-            self.step_counter = 0
-            self.done = True
-        else:
-            rc = self.tocar()
-            self.trun = True   
-        print('Recompensa Colision:', rc)
-        self.reward = rd + rb + rp + rl + rc # Recompensa total
+        if abs(self.pos_ef[2] - self.pos_obj[2]) < 0.05:
+            
+            self.done = True   
+        
+        self.reward = rd + rb + rp + rl # Recompensa total
         print('Recompensa Total: ', self.reward)
         #action = th.tensor(action)
         print('--------------------------------------------------------------------')
@@ -148,7 +143,7 @@ class GymCoppManR(gymnasium.Env):
         #step_counter = 0 # Restablecer contador de pasos
         #self.set_posicion(self.objetivo)
          
-        self.pos_inicial = self.joint_angles()   #self.default_pos.copy()   # Angulos iniciales de articulaciones
+        self.pos_inicial = self.default_pos.copy() #self.joint_angles()   #self.default_pos.copy()   # Angulos iniciales de articulaciones
         for i in range(self.DoF):
             self.move_joint(i, self.pos_inicial[i])
         #self.set_posicion_din(self.pos_inicial)   # establecer movimiento
@@ -290,8 +285,8 @@ class GymCoppManR(gymnasium.Env):
             Retorno
             Distancia en metros.
         '''
-        _, self.suelda_pos = sim.simxGetObjectPosition(self.clientID, self.tcp, -1, sim.simx_opmode_blocking)
-        _, self.objetivo_pos = sim.simxGetObjectPosition(self.clientID, self.objetivo, -1, sim.simx_opmode_blocking)
+        _, self.suelda_pos = sim.simxGetObjectPosition(self.clientID, self.tcp, self.objetivo, sim.simx_opmode_blocking)
+        _, self.objetivo_pos = sim.simxGetObjectPosition(self.clientID, self.objetivo, self.tcp, sim.simx_opmode_blocking)
         self.distancia = np.linalg.norm(np.array(self.suelda_pos) - np.array(self.objetivo_pos))
         return np.array(self.distancia, dtype=np.float32) # self.distancia
     
@@ -312,4 +307,4 @@ class GymCoppManR(gymnasium.Env):
         self.distancia = self.distance_to_goal()
         return {
             'info' : self.distancia
-        }  
+        }   
