@@ -128,9 +128,9 @@ class GymCoppManR(gymnasium.Env):
             rl = 0.0
         print('Recompensa llegada:', rl) 
         if abs(self.pos_ef[2] - self.pos_obj[2]) < 0.05:
-            
             self.done = True   
-        
+        #if dist_p == dist_a:
+         #   self.trun = True 
         self.reward = rd + rb + rp + rl # Recompensa total
         print('Recompensa Total: ', self.reward)
         #action = th.tensor(action)
@@ -307,4 +307,5 @@ class GymCoppManR(gymnasium.Env):
         self.distancia = self.distance_to_goal()
         return {
             'info' : self.distancia
-        }   
+        } 
+    
