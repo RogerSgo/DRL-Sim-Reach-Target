@@ -15,7 +15,7 @@ Configuracion experimental consta de un manipualdor robotico de 7 ejes, la tarea
 
 - Escena CoppeliaSim para Evaluacion y Entrenamiento.
 - Archivos .ipynb para Evaluacion y Entrenamiento.
-- Modelos entrenados con 1000 episodios.
+- Modelo entrenado con 1000 episodios (best_model.zip).
 <h2> Procedimiento </h2>
 
 - Entrenamiento: Abrir y ejecutar escena de ReachObjetive-Train-Test-FC.ipynb de Entrenamiento
