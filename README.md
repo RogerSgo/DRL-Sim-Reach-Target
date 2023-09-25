@@ -1,6 +1,6 @@
 <h1> Reach a target </h1>
 
-![Zona de trabajo](https://github.com/RogerSgo/DRL-Sim-Reach-Target/blob/main/Simulacion/Screenshot%202023-09-23%20232517.png)
+![Zona de trabajo](https://github.com/RogerSgo/DRL-Sim-Reach-Target/blob/main/Simulacion/Screenshot%202023-08-29%20084120.png)
 <h2> Description </h2>
 
 Configuracion experimental consta de un manipualdor robotico de 7 ejes, la tarea a realizar es alcanzar un objetivo dentro de una zona de trabajo en una escena de simulacion en CoppeliaSim.
